@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: ${APP_NAME:weshopify-brands-service}
+  jpa:
+    hibernate:
+      ddl-auto: ${DB_SCHEMA_DDL:update}
+    show-sql: ${DB_SCHEMA_SHOW_SQL:false}
+    properties:
+      format-sql: ${DB_SCHEMA_FORMAT_SQL:false}
+  profiles:
+    active:
+    - ${APP_PROFILE:dev}
+server:
+  port: ${APP_PORT:9091}
+
+---
+#Dev Environment
+spring:
+  config:
+    activate:
+      on-profile:
+      - dev
+  datasource:
+    driver-class-name: ${APP_DB_DRIVER:com.mysql.cj.jdbc.Driver}
+    url: ${DB_DRIVER:jdbc}:${DB_TYPE:mysql}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:weshopify-platform}
+    username: ${DB_USER_NAME:root}
+    password: ${DB_USER_PWD:root}
+
+---
+#QA Environment
+spring:
+  config:
+    activate:
+      on-profile:
+      - qa
+  datasource:
+    driver-class-name: ${APP_DB_DRIVER:org.h2.Driver}
+    url: ${DB_DRIVER:mem}:${DB_TYPE:h2}:${DB_SCHEMA:weshopify-platform-brands}
+    username: ${DB_USER_NAME:admin}
+    password: ${DB_USER_PASSWORD:admin}
+    
